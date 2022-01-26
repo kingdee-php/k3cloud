@@ -1,6 +1,6 @@
 <?php
 
-namespace Kingdeephp\K3cloud\Const;
+namespace Kingdeephp\K3cloud\Consts;
 
 class ApiPathConst
 {

@@ -2,7 +2,7 @@
 
 namespace Kingdeephp\K3cloud;
 
-use Kingdeephp\K3cloud\Const\ApiPathConst;
+use Kingdeephp\K3cloud\Consts\ApiPathConst;
 use Kingdeephp\K3cloud\Core\WebApiClient;
 
 class K3CloudApiSdkForLogin
