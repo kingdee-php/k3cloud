@@ -1,6 +1,6 @@
 <?php
 
-namespace kingdeephp\k3cloud\Traits;
+namespace Kingdeephp\K3cloud\Traits;
 
 use GuzzleHttp\Client;
 
@@ -21,6 +21,6 @@ trait HttpClientTraits
 
     public function __construct()
     {
-        $this->httpClient = new Client();
+        $this->httpClient = new Client(['cookies' => true]);
     }
 }

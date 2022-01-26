@@ -1,29 +1,18 @@
 <?php
 
-namespace kingdeephp\k3cloud;
+namespace Kingdeephp\K3cloud;
 
-use kingdeephp\k3cloud\Core\WebApiClient;
+use Kingdeephp\K3cloud\Const\ApiPathConst;
+use Kingdeephp\K3cloud\Core\WebApiClient;
 
 class K3CloudApiSdkForLogin
 {
-    const LOGIN_API = 'Kingdee.BOS.WebApi.ServicesStub.AuthService.ValidateUser.common.kdsvc';
-    const SAVE_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.save.common.kdsvc';
-    const BATCHSAVE_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.batchSave.common.kdsvc';
-    const VIEW_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.view.common.kdsvc';
-    const SUBMIT_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Submit.common.kdsvc';
-    const AUDIT_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Audit.common.kdsvc';
-    const PUSH_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Push.common.kdsvc';
-    const DRAFT_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.draft.common.kdsvc';
-    const DELETE_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.delete.common.kdsvc';
-    const GETBILL_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.ExecuteBillQuery.common.kdsvc';
-    const QUERYINFO_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.QueryBusinessInfo.common.kdsvc';
-
     // 金蝶域名或者IP地址;/K3Cloud/
-    public $cloudUrl = '';
+    public string $cloudUrl = '';
     //登陆数据
     ///public $loginData = [];
     //语言ID,中文2052,繁体3076，英文1033
-    public $LCID = 2052;
+    public int $LCID = 2052;
 
     public WebApiClient $webApiClient;
 
@@ -33,7 +22,7 @@ class K3CloudApiSdkForLogin
         $this->LCID = $LCID;
         //$this->loginData = [$acctID, $username, $password, $this->LCID];
         $this->webApiClient = new WebApiClient();
-        //$this->login($acctID, $username, $password);
+        $this->login($acctID, $username, $password);
     }
 
 
@@ -44,7 +33,7 @@ class K3CloudApiSdkForLogin
      */
     public function login($acctID, $username, $password)
     {
-        $url = $this->cloudUrl . self::LOGIN_API;
+        $url = $this->cloudUrl . ApiPathConst::LOGIN_API;
         $postData = [
             'acctid' => $acctID,
             'userName' => $username,
@@ -54,8 +43,49 @@ class K3CloudApiSdkForLogin
         return $this->webApiClient->execute($url, [], $postData, 'string');
     }
 
-    public function view()
+    /**
+     * 详情
+     * @param $formId
+     * @param $data
+     * @return mixed|string|void
+     */
+    public function view($formId, $data)
     {
+        $url = $this->cloudUrl . ApiPathConst::VIEW_API;
+        $postData = [
+            'formid' => $formId,
+            'data' => $data
+        ];
+        return $this->webApiClient->execute($url, [], $postData, 'string');
+    }
 
+    /**
+     *  单据查询
+     * @param $data
+     * @return mixed|string|void
+     */
+    public function billQuery($data)
+    {
+        $url = $this->cloudUrl . ApiPathConst::BILLQUERY_API;
+        $postData = [
+            'data' => $data
+        ];
+        return $this->webApiClient->execute($url, [], $postData, 'string');
+    }
+
+    /**
+     * 元数据查询
+     * @param $data
+     * @return mixed|string|void
+     */
+    public function queryBusinessInfo($formId)
+    {
+        $url = $this->cloudUrl . ApiPathConst::QUERYBUSINESSINFO_API;
+        $postData = [
+            'data' => [
+                'FormId' => $formId
+            ]
+        ];
+        return $this->webApiClient->execute($url, [], $postData, 'string');
     }
 }
