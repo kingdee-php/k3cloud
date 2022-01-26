@@ -61,12 +61,14 @@ $server->queryBusinessInfo($queryBusinessInfoParams)
 $formId = 'BD_MATERIAL'; //业务对象表单Id 例如物料 BD_MATERIAL 【必填】
 $viewParams = [
     //创建者组织内码，字符串类型【非必录】
-    'CreateOrgId' => 'BD_MATERIAL',
-    //创建者组织内码，字符串类型【非必录】
-    'CreateOrgId' => 'BD_MATERIAL', 
-    //创建者组织内码，字符串类型【非必录】
-    'CreateOrgId' => 'BD_MATERIAL', 
+    'CreateOrgId' => 0,
+    //单据编码，字符串类型【使用编码时必录】
+    'Number' => '', 
+    表单内码【使用内码时必录】
+    'Id' => '', 
 ];
 $server->view($formId, $viewParams)
+
+
 ```
 
