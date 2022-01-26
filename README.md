@@ -69,6 +69,5 @@ $viewParams = [
 ];
 $server->view($formId, $viewParams)
 
-
 ```
 

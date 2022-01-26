@@ -15,7 +15,7 @@ class K3CloudApiSdkForLogin
     public string $username = '';
     // 密码
     public string $password = '';
-    //语言ID,中文2052,繁体3076，英文1033
+    // 语言
     public int $lcid;
 
     public WebApiClient $webApiClient;
