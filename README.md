@@ -17,22 +17,15 @@ $ composer require kingdee-php/k3cloud
 ``` php
 <?php
 
-$cloud_url = 'http||https://xxxxxxxxxxxxxxxxx/k3cloud/'; //金蝶授权请求地址
-$acctId = 'xxxxxxxxxx'; // 账户ID
-$username = 'xxxxxxxxxx'; // 用户名
-$password 'xxxxxxxx'; // 密码
-$LCID = 2052; // 语言ID,中文2052,繁体3076，英文1033
-
-$config = [
-    'cloud_url' => 'http://sh.bianxingjimu.com.cn:1111/k3cloud/',
-    'acct_id' => '61878598016ce1',
-    'username' => 'Administrator',
-    'password' => 'kd123!@#',
-    'lcid' => 3076,
-];
-
 //实例化SDK 实例化同时完成登陆
-$server = new \Kingdeephp\K3cloud\K3CloudApiSdkForLogin($cloudUrl, $acctId, $username, $password, $LCID);
+$config = [
+    'cloud_url' => 'http||https://xxxxxxxxxxxxxxxxx/k3cloud/', //金蝶授权请求地址
+    'acct_id' => 'xxxxxxxxxx', //账户ID
+    'username' => 'xxxxxxxxxx', // 用户名
+    'password' => 'xxxxxxxxxx', // 密码
+    'lcid' => 2052,
+];
+$server = new \Kingdeephp\K3cloud\K3CloudApiSdkForLogin($config);
 
 //单据查询
 $billQueryParams = [
