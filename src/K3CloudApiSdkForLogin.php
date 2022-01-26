@@ -9,36 +9,40 @@ class K3CloudApiSdkForLogin
 {
     // 金蝶域名或者IP地址;/K3Cloud/
     public string $cloudUrl = '';
-
+    // 账户ID
+    public string $acctId = '';
+    // 用户名
+    public string $username = '';
+    // 密码
+    public string $password = '';
     //语言ID,中文2052,繁体3076，英文1033
-    public int $LCID = 2052;
+    public int $lcid;
 
     public WebApiClient $webApiClient;
 
-    public function __construct(string $cloudUrl, string $acctId, string $username, string $password, int $LCID = 2052)
+    public function __construct($config)
     {
-        $this->cloudUrl = rtrim($cloudUrl, "/") . "/";
-        $this->LCID = $LCID;
-        //$this->loginData = [$acctID, $username, $password, $this->LCID];
+        $this->cloudUrl = rtrim($config['cloud_url'], "/") . "/";
+        $this->acctId = $config['acct_id'];
+        $this->username = $config['username'];
+        $this->password = $config['password'];
+        $this->lcid = $config['lcid'] ?? 2052;
         $this->webApiClient = new WebApiClient();
-        $this->login($acctId, $username, $password);
+        $this->login();
     }
 
     /**
      * 登陆
-     * @param $acctID
-     * @param $username
-     * @param $password
      * @return mixed|string|void
      */
-    public function login($acctID, $username, $password)
+    public function login()
     {
         $url = $this->cloudUrl . ApiPathConst::LOGIN_API;
         $postData = [
-            'acctid' => $acctID,
-            'userName' => $username,
-            'password' => $password,
-            'lcid' => $this->LCID,
+            'acctid' => $this->acctId,
+            'userName' => $this->username,
+            'password' => $this->password,
+            'lcid' => $this->lcid,
         ];
         return $this->webApiClient->execute($url, [], $postData, 'string');
     }
