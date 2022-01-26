@@ -78,14 +78,13 @@ class K3CloudApiSdkForLogin
      * @param $data
      * @return mixed|string|void
      */
-    public function queryBusinessInfo($formId)
+    public function queryBusinessInfo($data)
     {
         $url = $this->cloudUrl . ApiPathConst::QUERYBUSINESSINFO_API;
         $postData = [
-            'data' => [
-                'FormId' => $formId
-            ]
+            'data' => $data
         ];
         return $this->webApiClient->execute($url, [], $postData, 'string');
     }
+
 }
