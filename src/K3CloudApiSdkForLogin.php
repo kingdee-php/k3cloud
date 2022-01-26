@@ -9,27 +9,27 @@ class K3CloudApiSdkForLogin
 {
     // 金蝶域名或者IP地址;/K3Cloud/
     public string $cloudUrl = '';
-    //登陆数据
-    ///public $loginData = [];
+
     //语言ID,中文2052,繁体3076，英文1033
     public int $LCID = 2052;
 
     public WebApiClient $webApiClient;
 
-    public function __construct(string $cloudUrl, string $acctID, string $username, string $password, int $LCID = 2052)
+    public function __construct(string $cloudUrl, string $acctId, string $username, string $password, int $LCID = 2052)
     {
         $this->cloudUrl = rtrim($cloudUrl, "/") . "/";
         $this->LCID = $LCID;
         //$this->loginData = [$acctID, $username, $password, $this->LCID];
         $this->webApiClient = new WebApiClient();
-        $this->login($acctID, $username, $password);
+        $this->login($acctId, $username, $password);
     }
-
 
     /**
      * 登陆
-     *
-     * @return array
+     * @param $acctID
+     * @param $username
+     * @param $password
+     * @return mixed|string|void
      */
     public function login($acctID, $username, $password)
     {

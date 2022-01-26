@@ -17,7 +17,7 @@ trait HttpClientTraits
         'http_errors' => false,
     ];
 
-    private $httpClient;
+    private Client $httpClient;
 
     public function __construct()
     {

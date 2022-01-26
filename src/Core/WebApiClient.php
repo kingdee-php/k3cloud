@@ -10,8 +10,6 @@ class WebApiClient
 {
     use HttpClientTraits;
 
-    public $cookieJar;
-
     public function execute($url, $headers, $postData, $format)
     {
         $headers = $this->defaultHeaders + $headers;
