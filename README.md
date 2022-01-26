@@ -47,13 +47,13 @@ $billQueryParams = [
     'SubSystemId' => '',
 ];
 $server->billQuery($billQueryParams)
+
 //元数据查询
 $queryBusinessInfoParams = [
     // 业务对象表单Id 例如物料 BD_MATERIAL 【必填】
     'FormId' => 'BD_MATERIAL', 
 ];
 $server->queryBusinessInfo($queryBusinessInfoParams)
-print_r($server->queryBusinessInfo('BD_MATERIAL')); //获取物料元数据列表
 
 ```
 
