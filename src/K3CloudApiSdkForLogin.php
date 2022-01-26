@@ -68,9 +68,9 @@ class K3CloudApiSdkForLogin
      * @param $data
      * @return mixed|string|void
      */
-    public function billQuery($data)
+    public function executeBillQuery($data)
     {
-        $url = $this->cloudUrl . ApiPathConst::BILLQUERY_API;
+        $url = $this->cloudUrl . ApiPathConst::EXECUTEBILLQUERY_API;
         $postData = [
             'data' => $data
         ];
