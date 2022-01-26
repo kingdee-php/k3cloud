@@ -3,6 +3,8 @@
 A PHP SDK for KingDee
 ## Install
 
+Continue to improve
+
 Via Composer
 
 ``` bash
