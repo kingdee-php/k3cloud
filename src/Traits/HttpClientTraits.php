@@ -10,7 +10,7 @@ trait HttpClientTraits
         'Accept' => 'application/json',
         'Content-Type' => 'application/json',
         'Accept-Charset' => 'utf-8',
-        'User-Agent' => 'Kingdee/Php WebApi SDK 7.3 (compatible; MSIE 6.0; Windows NT 5.1;SV1)',
+        'User-Agent' => 'Kingdee/Php WebApi SDK (compatible: K3Cloud 7.3+)',
     ];
 
     private array $defaultGuzzleOption = [

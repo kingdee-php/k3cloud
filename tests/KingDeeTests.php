@@ -32,6 +32,6 @@ $billQueryParams = [
     //子系统标识ID【非必录】
     'SubSystemId' => '',
 ];
-$res = $server->executeBillQuery($billQueryParams);
+$res = $server->executeBillQuery($billQueryParams, 'array');
 print_r($res);
 

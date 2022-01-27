@@ -53,14 +53,14 @@ class K3CloudApiSdkForLogin
      * @param $data
      * @return mixed|string|void
      */
-    public function view($formId, $data)
+    public function view($formId, $data, $format = 'string')
     {
         $url = $this->cloudUrl . ApiPathConst::VIEW_API;
         $postData = [
             'formid' => $formId,
             'data' => $data
         ];
-        return $this->webApiClient->execute($url, [], $postData, 'string');
+        return $this->webApiClient->execute($url, [], $postData, $format);
     }
 
     /**
@@ -68,13 +68,13 @@ class K3CloudApiSdkForLogin
      * @param $data
      * @return mixed|string|void
      */
-    public function executeBillQuery($data)
+    public function executeBillQuery($data, $format = 'string')
     {
         $url = $this->cloudUrl . ApiPathConst::EXECUTEBILLQUERY_API;
         $postData = [
             'data' => $data
         ];
-        return $this->webApiClient->execute($url, [], $postData, 'string');
+        return $this->webApiClient->execute($url, [], $postData, $format);
     }
 
     /**
@@ -82,13 +82,13 @@ class K3CloudApiSdkForLogin
      * @param $data
      * @return mixed|string|void
      */
-    public function queryBusinessInfo($data)
+    public function queryBusinessInfo($data, $format = 'string')
     {
         $url = $this->cloudUrl . ApiPathConst::QUERYBUSINESSINFO_API;
         $postData = [
             'data' => $data
         ];
-        return $this->webApiClient->execute($url, [], $postData, 'string');
+        return $this->webApiClient->execute($url, [], $postData, $format);
     }
 
 }
