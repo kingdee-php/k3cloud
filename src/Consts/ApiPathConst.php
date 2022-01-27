@@ -6,6 +6,8 @@ class ApiPathConst
 {
     // 登陆
     const LOGIN_API = 'Kingdee.BOS.WebApi.ServicesStub.AuthService.ValidateUser.common.kdsvc';
+    // 获取数据中心列表
+    const GETDATACENTERLIST_API = 'Kingdee.BOS.ServiceFacade.ServicesStub.Account.AccountService.GetDataCenterList.common.kdsvc';
     // 操作
     const EXCUTEOPERATION_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.ExcuteOperation.common.kdsvc';
     // 保存

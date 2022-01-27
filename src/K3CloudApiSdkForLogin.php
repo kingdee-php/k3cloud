@@ -91,4 +91,14 @@ class K3CloudApiSdkForLogin
         return $this->webApiClient->execute($url, [], $postData, $format);
     }
 
+    /**
+     * 获取数据中心列表
+     * @param string $format
+     * @return mixed|string|void
+     */
+    public function getDataCenterList($format = 'string')
+    {
+        $url = $this->cloudUrl . ApiPathConst::GETDATACENTERLIST_API;
+        return $this->webApiClient->execute($url, [], [], $format);
+    }
 }
