@@ -13,7 +13,7 @@ $config = [
 $server = new \Kingdeephp\K3cloud\K3CloudApiSdkForLogin($config);
 //print_r($server->login('61878598016ce1', 'Administrator', 'kd123!@#', '2052'));
 //单据查询
-$billQueryParams = [
+/*$billQueryParams = [
     // 业务对象表单Id 例如物料 BD_MATERIAL 【必填】
     'FormId' => 'BD_MATERIAL',
     // 需查询的字段key集合，字符串类型，格式：'key1, key2, ...'【必填】
@@ -33,5 +33,9 @@ $billQueryParams = [
     'SubSystemId' => '',
 ];
 $res = $server->executeBillQuery($billQueryParams, 'array');
+print_r($res);*/
+
+//数据中心列表
+$res = $server->getDataCenterList('array');
 print_r($res);
 

@@ -27,6 +27,8 @@ $config = [
 ];
 $server = new \Kingdeephp\K3cloud\K3CloudApiSdkForLogin($config);
 
+//返回值格式 可不传 默认string 所有接口通用
+$format = 'string';
 //单据查询
 $executeBillQueryParams = [
     // 业务对象表单Id 例如物料 BD_MATERIAL 【必填】
@@ -47,7 +49,7 @@ $executeBillQueryParams = [
     //子系统标识ID【非必录】
     'SubSystemId' => '',
 ];
-$server->executeBillQuery($billQueryParams)
+$server->executeBillQuery($billQueryParams, $format);
 
 //元数据查询
 $queryBusinessInfoParams = [
@@ -64,7 +66,7 @@ $viewParams = [
     'CreateOrgId' => 0,
     //单据编码，字符串类型【使用编码时必录】
     'Number' => '', 
-    表单内码【使用内码时必录】
+    //表单内码【使用内码时必录】
     'Id' => '', 
 ];
 $server->view($formId, $viewParams);
