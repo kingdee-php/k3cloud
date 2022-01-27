@@ -99,7 +99,7 @@ class K3CloudApiSdkForLogin
      * @param string $format
      * @return mixed|string|void
      */
-    public function getDataCenterList($format = 'string')
+    public function getDataCenterList(string $format = 'string')
     {
         $url = $this->cloudUrl . ApiPathConst::GETDATACENTERLIST_API;
         return $this->webApiClient->execute($url, [], [], $format);
