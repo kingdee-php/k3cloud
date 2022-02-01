@@ -57,7 +57,7 @@ class K3CloudApiSdk
      */
     public function login_type2()
     {
-        $url = $this->hostUrl . ApiPathConst::LOGIN_API;
+        $url = $this->hostUrl . ApiPathConst::LOGIN_API_2;
         $postData = [
             'acctid' => $this->config['acct_id'],         // 账户ID
             'username' => $this->config['username'],      // 用户名
