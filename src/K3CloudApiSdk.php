@@ -3,48 +3,78 @@
 namespace Kingdeephp\K3cloud;
 
 use Kingdeephp\K3cloud\Consts\ApiPathConst;
+use Kingdeephp\K3cloud\Consts\ApiAuthTypeConst;
 use Kingdeephp\K3cloud\Core\WebApiClient;
 
-class K3CloudApiSdkForLogin
+class K3CloudApiSdk
 {
     // 金蝶域名或者IP地址;/K3Cloud/
-    public string $cloudUrl = '';
-    // 账户ID
-    public string $acctId = '';
-    // 用户名
-    public string $username = '';
-    // 密码
-    public string $password = '';
-    // 语言
-    public int $lcid;
+    public string $hostUrl = '';
+    public $config = [];
 
     public WebApiClient $webApiClient;
 
     public function __construct($config)
     {
-        $this->cloudUrl = rtrim($config['cloud_url'], "/") . "/";
-        $this->acctId = $config['acct_id'];
-        $this->username = $config['username'];
-        $this->password = $config['password'];
-        $this->lcid = $config['lcid'] ?? 2052;
+        $this->hostUrl = rtrim($config['host_url'], "/") . "/";
+        $this->config = $config;
         $this->webApiClient = new WebApiClient();
-        $this->login();
+
+        $type = $this->config['auth_type'] ?? 1;
+        switch ($type) {
+            case ApiAuthTypeConst::USER_ID_PASSWORD:
+                $this->login_type1();
+                break;
+            case ApiAuthTypeConst::APP_ID_SECRET:
+                $this->login_type2();
+                break;
+            case ApiAuthTypeConst::API_SIGNATURE:
+                break;
+            default:
+                break;
+        }
     }
 
     /**
-     * 登陆
+     * 登录: 用户名+密码
      * @return mixed|string|void
      */
-    public function login()
+    public function login_type1()
     {
-        $url = $this->cloudUrl . ApiPathConst::LOGIN_API;
+        $url = $this->hostUrl . ApiPathConst::LOGIN_API;
         $postData = [
-            'acctid' => $this->acctId,
-            'userName' => $this->username,
-            'password' => $this->password,
-            'lcid' => $this->lcid,
+            'acctid' => $this->config['acct_id'],         // 账户ID
+            'username' => $this->config['username'],      // 用户名
+            'password' => $this->config['password'],      // 密码
+            'lcid' => $this->config['lcid'] ?? 2052,      // 语言
         ];
         return $this->webApiClient->execute($url, [], $postData, 'string');
+    }
+
+    /**
+     * 登录: 第三方授权应用ID+应用密钥
+     * @return mixed|string|void
+     */
+    public function login_type2()
+    {
+        $url = $this->hostUrl . ApiPathConst::LOGIN_API;
+        $postData = [
+            'acctid' => $this->config['acct_id'],         // 账户ID
+            'username' => $this->config['username'],      // 用户名
+            'appid' => $this->config['appid'],            // 应用ID
+            'appsecret' => $this->config['appsecret'],    // 应用密钥
+            'lcid' => $this->config['lcid'] ?? 2052,      // 语言
+        ];
+        return $this->webApiClient->execute($url, [], $postData, 'string');
+    }
+
+    public function getHeaders($url)
+    {
+        $headers = [];
+        if ($this->config['auth_type']==ApiAuthTypeConst::API_SIGNATURE) {
+            $headers = $this->webApiClient->buildHeader($url, $this->config);
+        } 
+        return $headers;
     }
 
     /**
@@ -56,12 +86,12 @@ class K3CloudApiSdkForLogin
      */
     public function view($formId, $data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::VIEW_API;
+        $url = $this->hostUrl . ApiPathConst::VIEW_API;
         $postData = [
             'formid' => $formId,
             'data' => $data
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -72,11 +102,11 @@ class K3CloudApiSdkForLogin
      */
     public function executeBillQuery($data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::EXECUTEBILLQUERY_API;
+        $url = $this->hostUrl . ApiPathConst::EXECUTEBILLQUERY_API;
         $postData = [
             'data' => $data
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -87,11 +117,11 @@ class K3CloudApiSdkForLogin
      */
     public function queryBusinessInfo($data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::QUERYBUSINESSINFO_API;
+        $url = $this->hostUrl . ApiPathConst::QUERYBUSINESSINFO_API;
         $postData = [
             'data' => $data
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -101,8 +131,8 @@ class K3CloudApiSdkForLogin
      */
     public function getDataCenterList(string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::GETDATACENTERLIST_API;
-        return $this->webApiClient->execute($url, [], [], $format);
+        $url = $this->hostUrl . ApiPathConst::GETDATACENTERLIST_API;
+        return $this->webApiClient->execute($url, $this->getHeaders($url), [], $format);
     }
 
     /**
@@ -114,14 +144,14 @@ class K3CloudApiSdkForLogin
      */
     public function save($formId, $data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::SAVE_API;
+        $url = $this->hostUrl . ApiPathConst::SAVE_API;
         $postData = [
             'data' => [
                 'formid' => $formId,
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -133,14 +163,14 @@ class K3CloudApiSdkForLogin
      */
     public function batchSave($formId, $data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::BATCHSAVE_API;
+        $url = $this->hostUrl . ApiPathConst::BATCHSAVE_API;
         $postData = [
             'data' => [
                 'formid' => $formId,
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -152,14 +182,14 @@ class K3CloudApiSdkForLogin
      */
     public function audit($formId, $data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::AUDIT_API;
+        $url = $this->hostUrl . ApiPathConst::AUDIT_API;
         $postData = [
             'data' => [
                 'formid' => $formId,
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -171,14 +201,14 @@ class K3CloudApiSdkForLogin
      */
     public function unAudit($formId, $data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::UNAUDIT_API;
+        $url = $this->hostUrl . ApiPathConst::UNAUDIT_API;
         $postData = [
             'data' => [
                 'formid' => $formId,
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -190,14 +220,14 @@ class K3CloudApiSdkForLogin
      */
     public function submit($formId, $data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::SUBMIT_API;
+        $url = $this->hostUrl . ApiPathConst::SUBMIT_API;
         $postData = [
             'data' => [
                 'formid' => $formId,
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -210,7 +240,7 @@ class K3CloudApiSdkForLogin
      */
     public function operation($formId, $opNumber, $data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::EXCUTEOPERATION_API;
+        $url = $this->hostUrl . ApiPathConst::EXCUTEOPERATION_API;
         $postData = [
             'data' => [
                 'formid' => $formId,
@@ -218,7 +248,7 @@ class K3CloudApiSdkForLogin
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -230,14 +260,14 @@ class K3CloudApiSdkForLogin
      */
     public function push($formId, $data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::PUSH_API;
+        $url = $this->hostUrl . ApiPathConst::PUSH_API;
         $postData = [
             'data' => [
                 'formid' => $formId,
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -249,14 +279,14 @@ class K3CloudApiSdkForLogin
      */
     public function draft($formId, $data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::DRAFT_API;
+        $url = $this->hostUrl . ApiPathConst::DRAFT_API;
         $postData = [
             'data' => [
                 'formid' => $formId,
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -268,14 +298,14 @@ class K3CloudApiSdkForLogin
      */
     public function delete($formId, $data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::DELETE_API;
+        $url = $this->hostUrl . ApiPathConst::DELETE_API;
         $postData = [
             'data' => [
                 'formid' => $formId,
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -287,14 +317,14 @@ class K3CloudApiSdkForLogin
      */
     public function allocate($formId, $data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::ALLOCATE_API;
+        $url = $this->hostUrl . ApiPathConst::ALLOCATE_API;
         $postData = [
             'data' => [
                 'formid' => $formId,
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -306,14 +336,14 @@ class K3CloudApiSdkForLogin
      */
     public function flexSave($formId, $data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::FLEXSAVE_API;
+        $url = $this->hostUrl . ApiPathConst::FLEXSAVE_API;
         $postData = [
             'data' => [
                 'formid' => $formId,
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -324,13 +354,13 @@ class K3CloudApiSdkForLogin
      */
     public function sendMsg($data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::SENDMSG_API;
+        $url = $this->hostUrl . ApiPathConst::SENDMSG_API;
         $postData = [
             'data' => [
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -342,14 +372,14 @@ class K3CloudApiSdkForLogin
      */
     public function groupSave($formId, $data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::GROUPSAVE_API;
+        $url = $this->hostUrl . ApiPathConst::GROUPSAVE_API;
         $postData = [
             'data' => [
                 'formid' => $formId,
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -361,14 +391,14 @@ class K3CloudApiSdkForLogin
      */
     public function disassembly($formId, $data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::DISASSEMBLY_API;
+        $url = $this->hostUrl . ApiPathConst::DISASSEMBLY_API;
         $postData = [
             'data' => [
                 'formid' => $formId,
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -379,13 +409,13 @@ class K3CloudApiSdkForLogin
      */
     public function workflowAudit($data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::WORKFLOWAUDIT_API;
+        $url = $this->hostUrl . ApiPathConst::WORKFLOWAUDIT_API;
         $postData = [
             'data' => [
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -396,13 +426,13 @@ class K3CloudApiSdkForLogin
      */
     public function queryGroupInfo($data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::QUERYGROUPINFO_API;
+        $url = $this->hostUrl . ApiPathConst::QUERYGROUPINFO_API;
         $postData = [
             'data' => [
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 
     /**
@@ -413,12 +443,12 @@ class K3CloudApiSdkForLogin
      */
     public function groupDelete($data, string $format = 'string')
     {
-        $url = $this->cloudUrl . ApiPathConst::GROUPDELETE_API;
+        $url = $this->hostUrl . ApiPathConst::GROUPDELETE_API;
         $postData = [
             'data' => [
                 'data' => $data
             ]
         ];
-        return $this->webApiClient->execute($url, [], $postData, $format);
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
 }

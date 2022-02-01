@@ -17,15 +17,15 @@ $ composer require kingdee-php/k3cloud
 ``` php
 <?php
 
-//实例化SDK 实例化同时完成登陆
+//实例化SDK 实例化同时完成登录
 $config = [
-    'cloud_url' => 'http||https://xxxxxxxxxxxxxxxxx/k3cloud/', //金蝶授权请求地址
+    'host_url' => 'http||https://xxxxxxxxxxxxxxxxx/k3cloud/', //金蝶授权请求地址
     'acct_id' => 'xxxxxxxxxx', //账户ID
     'username' => 'xxxxxxxxxx', // 用户名
     'password' => 'xxxxxxxxxx', // 密码
     'lcid' => 2052,
 ];
-$server = new \Kingdeephp\K3cloud\K3CloudApiSdkForLogin($config);
+$server = new \Kingdeephp\K3cloud\K3CloudApiSdk($config);
 
 //返回值格式 可不传 默认string 所有接口通用
 $format = 'string';

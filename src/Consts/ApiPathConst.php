@@ -4,8 +4,10 @@ namespace Kingdeephp\K3cloud\Consts;
 
 class ApiPathConst
 {
-    // 登陆
+    // 登录（通过用户名+密码）
     const LOGIN_API = 'Kingdee.BOS.WebApi.ServicesStub.AuthService.ValidateUser.common.kdsvc';
+    // 登录（通过第三方授权应用ID+应用密钥）
+    const LOGIN_API_2 = 'Kingdee.BOS.WebApi.ServicesStub.AuthService.LoginByAppSecret.common.kdsvc';
     // 获取数据中心列表
     const GETDATACENTERLIST_API = 'Kingdee.BOS.ServiceFacade.ServicesStub.Account.AccountService.GetDataCenterList.common.kdsvc';
     // 操作
