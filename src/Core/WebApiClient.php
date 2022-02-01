@@ -37,7 +37,7 @@ class WebApiClient
         $nonce = $time_stamp;
         $arr = explode('_', $config['appid']);
         $client_id = $arr[0];
-        $client_sec = decodeAppSecret($arr[1]);
+        $client_sec = $this->decodeAppSecret($arr[1]);
         $api_sign = 'POST\n' . $path_url . '\n\nx-api-nonce:' . $nonce . '\nx-api-timestamp:' . $time_stamp . '\n';
         $app_data = $config['acct_id'] . ',' . $config['username'] . ',' . ($this->config['lcid'] ?? 2052) . ',' . ($this->config['org_num'] ?? 0);
         $auth_headers = [
@@ -46,10 +46,10 @@ class WebApiClient
             'x-api-timestamp' => $time_stamp,
             'x-api-nonce' => $nonce,
             'x-api-signheaders' => 'x-api-timestamp,x-api-nonce',
-            'X-Api-Signature' => kd_HmacSHA256($api_sign, $client_sec),
+            'X-Api-Signature' => $this->kd_HmacSHA256($api_sign, $client_sec),
             'X-Kd-Appkey' => $config['appid'],
             'X-Kd-Appdata' => base64_encode($app_data),
-            'X-Kd-Signature' => kd_HmacSHA256($config['appid'] . $app_data, $config['appsecret']),
+            'X-Kd-Signature' => $this->kd_HmacSHA256($config['appid'] . $app_data, $config['appsecret']),
         ];
         return $auth_headers;
     }
@@ -71,7 +71,7 @@ class WebApiClient
         // $xor_code = '0054s3974c62343787b09ca7d32e5debce72';      // example from official Python SDK
         $xor_code = '0054f397c6234378b09ca7d3e5debce7';             // example from official Java SDK
         $base64_decode = base64_decode($secret);
-        $base64_xor = xor_code($base64_decode, $xor_code);
+        $base64_xor = $this->xor_code($base64_decode, $xor_code);
         return base64_encode($base64_xor);
     }
 
