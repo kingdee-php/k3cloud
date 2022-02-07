@@ -10,7 +10,7 @@ class K3CloudApiSdk
 {
     // 金蝶域名或者IP地址;/K3Cloud/
     public string $hostUrl = '';
-    public $config = [];
+    public array $config = [];
 
     public WebApiClient $webApiClient;
 
@@ -29,7 +29,6 @@ class K3CloudApiSdk
                 $this->login_type2();
                 break;
             case ApiAuthTypeConst::API_SIGNATURE:
-                break;
             default:
                 break;
         }
@@ -71,9 +70,9 @@ class K3CloudApiSdk
     public function getHeaders($url)
     {
         $headers = [];
-        if ($this->config['auth_type']==ApiAuthTypeConst::API_SIGNATURE) {
+        if ($this->config['auth_type'] == ApiAuthTypeConst::API_SIGNATURE) {
             $headers = $this->webApiClient->buildHeader($url, $this->config);
-        } 
+        }
         return $headers;
     }
 
