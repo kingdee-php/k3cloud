@@ -23,10 +23,10 @@ class K3CloudApiSdk
         $type = $this->config['auth_type'] ?? 1;
         switch ($type) {
             case ApiAuthTypeConst::USER_ID_PASSWORD:
-                $this->login_type1();
+                $this->loginForPassword();
                 break;
             case ApiAuthTypeConst::APP_ID_SECRET:
-                $this->login_type2();
+                $this->loginForSecret();
                 break;
             case ApiAuthTypeConst::API_SIGNATURE:
             default:
@@ -38,7 +38,7 @@ class K3CloudApiSdk
      * 登录: 用户名+密码
      * @return mixed|string|void
      */
-    public function login_type1()
+    public function loginForPassword()
     {
         $url = $this->hostUrl . ApiPathConst::LOGIN_API;
         $postData = [
@@ -54,9 +54,9 @@ class K3CloudApiSdk
      * 登录: 第三方授权应用ID+应用密钥
      * @return mixed|string|void
      */
-    public function login_type2()
+    public function loginForSecret()
     {
-        $url = $this->hostUrl . ApiPathConst::LOGIN_API_2;
+        $url = $this->hostUrl . ApiPathConst::LOGIN_API_APP_SECRET;
         $postData = [
             'acctid' => $this->config['acct_id'],         // 账户ID
             'username' => $this->config['username'],      // 用户名
@@ -67,6 +67,11 @@ class K3CloudApiSdk
         return $this->webApiClient->execute($url, [], $postData, 'string');
     }
 
+    /**
+     * 登录: 签名
+     * @param $url
+     * @return array
+     */
     public function getHeaders($url)
     {
         $headers = [];
