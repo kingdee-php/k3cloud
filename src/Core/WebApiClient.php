@@ -29,7 +29,7 @@ class WebApiClient
 
     public function buildHeader($service_url, $config)
     {
-        $path_url = parse_url($service_url, PHP_URL_PATH);
+        //$path_url = parse_url($service_url, PHP_URL_PATH);
         $path_url = str_replace('/', '%2F', $service_url);
         $time_stamp = time();    // 1643627187
         $nonce = $time_stamp;
@@ -67,7 +67,8 @@ class WebApiClient
         // $xor_code = '0054s3974c62343787b09ca7d32e5debce72';      // example from official Python SDK
         $xor_code = '0054f397c6234378b09ca7d3e5debce7';             // example from official Java SDK
         $base64_decode = base64_decode($secret);
-        $base64_xor = $this->xor_code($base64_decode, $xor_code);
+        $base64_xor = $base64_decode ^ $xor_code;
+        //$base64_xor = $this->xor_code($base64_decode, $xor_code);
         return base64_encode($base64_xor);
     }
 
