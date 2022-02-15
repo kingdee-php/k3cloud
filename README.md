@@ -26,7 +26,7 @@ $config = [
     'password' => 'xxxxxxxxxx', // 密码（授权类型为1时必须）
     'appid' => 'xxxxxxxxxx', // 应用ID（授权类型为2或3时必须）
     'appsecret' => 'xxxxxxxxxx', // 应用Secret（授权类型为2或3时必须）
-    'lcid' => 2052,
+    'lcid' => 2052, // 账套语系，默认2052
 ];
 $server = new \Kingdeephp\K3cloud\K3CloudApiSdk($config);
 
