@@ -45,9 +45,9 @@ class ApiPathConst
     // 查询单据
     const QUERYBUSINESSINFO_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.QueryBusinessInfo.common.kdsvc';
     // 工作流审批
-    const WORKFLOWAUDIT_API ='Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.WorkflowAudit.common.kdsvc';
+    const WORKFLOWAUDIT_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.WorkflowAudit.common.kdsvc';
     // 查询分组信息
-    const QUERYGROUPINFO_API ='Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.QueryGroupInfo.common.kdsvc';
+    const QUERYGROUPINFO_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.QueryGroupInfo.common.kdsvc';
     // 分组删除
-    const GROUPDELETE_API ='Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.GroupDelete.common.kdsvc';
+    const GROUPDELETE_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.GroupDelete.common.kdsvc';
 }
