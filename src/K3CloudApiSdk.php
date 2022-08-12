@@ -18,7 +18,7 @@ class K3CloudApiSdk
     {
         $this->hostUrl = rtrim($config['host_url'], "/") . "/";
         $this->config = $config;
-        $this->webApiClient = new WebApiClient();
+        $this->webApiClient = new WebApiClient($config);
 
         $type = $this->config['auth_type'] ?? 1;
         switch ($type) {

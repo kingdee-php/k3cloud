@@ -3,13 +3,25 @@
 namespace Kingdeephp\K3cloud\Core;
 
 use Kingdeephp\K3cloud\Traits\HttpClientTraits;
+use Kingdeephp\K3cloud\Core\Log\LoggerManager;
 
 class WebApiClient
 {
-    use HttpClientTraits;
+    use HttpClientTraits {
+        HttpClientTraits::__construct as private __httpClientTraitsConstruct;
+    }
+
+    private array $config = [];
+
+    public function __construct($config)
+    {
+        $this->__httpClientTraitsConstruct();
+        $this->config = $config;
+    }
 
     public function execute($url, $headers, $postData, $format)
     {
+        $logId = strtoupper(md5(uniqid(rand(), true)));
         $headers = $this->defaultHeaders + $headers;
         try {
             $response = $this->httpClient->post(
@@ -20,8 +32,33 @@ class WebApiClient
                 ]
             );
             $res = $response->getBody()->getContents();
+            if (!empty($this->config['k3cloud_log'])) {
+                list($usec, $sec) = explode(" ", microtime());
+                LoggerManager::createDailyDriver($this->config['k3cloud_log']['name'], $this->config['k3cloud_log']['path'])
+                    ->info('apiLog', [
+                    'log_id' => $logId,
+                    'request_time' => '时间：' . date('Y-m-d H:i:s') . "毫秒时间戳" . ((float)$usec + (float)$sec),
+                    'request_url' => $url,
+                    'request_header' => $headers,
+                    'request_body' => $postData,
+                    'response_status' => $response->getStatusCode(),
+                    'response_header' => $response->getHeaders(),
+                    'response_body' => json_decode($res, true),
+                ]);
+            }
         } catch (\Throwable $exception) {
             print_r($exception->getMessage());
+            if (!empty($this->config['k3cloud_log'])) {
+                LoggerManager::createDailyDriver('exception', $this->config['k3cloud_log']['path'])
+                    ->info('apiLog', [
+                    'log_id' => $logId,
+                    'request_time' => date('Y-m-d H:i:s'),
+                    'request_url' => $url,
+                    'request_header' => $headers,
+                    'request_body' => $postData,
+                    'exception' => $exception->getMessage(),
+                ]);
+            }
             die;
         }
         return $format == 'string' ? $res : json_decode($res, true);
@@ -78,5 +115,18 @@ class WebApiClient
             $string[$i] = ($string[$i] ^ $key[$i]);
         }
         return $string;
+    }
+
+    /*
+     *
+     *返回字符串的毫秒数时间戳
+     */
+    private function geTotalMillisecond()
+    {
+        $time = explode(" ", microtime());
+        $time = $time [1] . ($time [0] * 1000);
+        $time2 = explode(".", $time);
+        $time = $time2 [0];
+        return $time;
     }
 }
