@@ -20,7 +20,6 @@ class LoggerManager
             $path,
             $days,
             $level
-            )
-        );
+        ));
     }
 }
