@@ -27,6 +27,11 @@ $config = [
     'appid' => 'xxxxxxxxxx', // 应用ID（授权类型为2或3时必须）
     'appsecret' => 'xxxxxxxxxx', // 应用Secret（授权类型为2或3时必须）
     'lcid' => 2052, // 账套语系，默认2052
+    // 文件日志配置（每日生成一个文件日志）
+    'k3cloud_log' => [
+        'name' => 'k3cloud', //日志文件名称
+        'path' => '', //日志路径
+    ]
 ];
 $server = new \Kingdeephp\K3cloud\K3CloudApiSdk($config);
 

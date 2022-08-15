@@ -49,8 +49,8 @@ class WebApiClient
         } catch (\Throwable $exception) {
             print_r($exception->getMessage());
             if (!empty($this->config['k3cloud_log'])) {
-                LoggerManager::createDailyDriver('exception', $this->config['k3cloud_log']['path'])
-                    ->info('apiLog', [
+                LoggerManager::createDailyDriver($this->config['k3cloud_log']['name'], $this->config['k3cloud_log']['path'])
+                    ->info('apiLog_exception', [
                     'log_id' => $logId,
                     'request_time' => date('Y-m-d H:i:s'),
                     'request_url' => $url,
