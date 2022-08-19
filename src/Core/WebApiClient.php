@@ -47,7 +47,6 @@ class WebApiClient
                 ]);
             }
         } catch (\Throwable $exception) {
-            print_r($exception->getMessage());
             if (!empty($this->config['k3cloud_log'])) {
                 LoggerManager::createDailyDriver($this->config['k3cloud_log']['name'], $this->config['k3cloud_log']['path'])
                     ->info('apiLog_exception', [
@@ -57,6 +56,9 @@ class WebApiClient
                     'request_header' => $headers,
                     'request_body' => $postData,
                     'exception' => $exception->getMessage(),
+                    'file' => $exception->getFile(),
+                    'line' => $exception->getLine(),
+                    'code' => $exception->getCode(),
                 ]);
             }
             die;
