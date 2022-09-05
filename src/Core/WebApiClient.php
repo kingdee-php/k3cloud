@@ -32,6 +32,9 @@ class WebApiClient
                 ]
             );
             $res = $response->getBody()->getContents();
+            $sqlLogResult = LoggerManager::createMysqlLog($url, $headers, $postData, 'post', $this->config, $response);
+            print_r($sqlLogResult);
+            die;
             if (!empty($this->config['k3cloud_log'])) {
                 list($usec, $sec) = explode(" ", microtime());
                 LoggerManager::createDailyDriver($this->config['k3cloud_log']['name'], $this->config['k3cloud_log']['path'])
