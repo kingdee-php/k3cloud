@@ -32,9 +32,9 @@ class WebApiClient
                 ]
             );
             $res = $response->getBody()->getContents();
-            if (!empty($this->config['k3cloud_log'])) {
+            if (!empty($this->config['log'])) {
                 list($usec, $sec) = explode(" ", microtime());
-                LoggerManager::createDailyDriver($this->config['k3cloud_log']['name'], $this->config['k3cloud_log']['path'])
+                LoggerManager::createDailyDriver($this->config['log']['name'], $this->config['log']['path'])
                     ->info('apiLog', [
                     'log_id' => $logId,
                     'request_time' => '时间：' . date('Y-m-d H:i:s') . "毫秒时间戳" . ((float)$usec + (float)$sec),
@@ -47,8 +47,8 @@ class WebApiClient
                 ]);
             }
         } catch (\Throwable $exception) {
-            if (!empty($this->config['k3cloud_log'])) {
-                LoggerManager::createDailyDriver($this->config['k3cloud_log']['name'], $this->config['k3cloud_log']['path'])
+            if (!empty($this->config['log'])) {
+                LoggerManager::createDailyDriver($this->config['log']['name'], $this->config['log']['path'])
                     ->info('apiLog_exception', [
                     'log_id' => $logId,
                     'request_time' => date('Y-m-d H:i:s'),
