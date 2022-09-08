@@ -31,7 +31,16 @@ $config = [
     'log' => [
         'name' => 'k3cloud', //日志文件名称
         'path' => '', //日志路径
-    ]
+    ],
+    'mysql_log' => [
+        'host' => '127.0.0.1',
+        'port' => '3306',
+        'database' => '',
+        'username' => 'root',
+        'password' => '',
+        'charset' => 'utf8mb4',
+        'table' => '',
+    ],
 ];
 $server = new \Kingdeephp\K3cloud\K3CloudApiSdk($config);
 

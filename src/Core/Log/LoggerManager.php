@@ -54,7 +54,6 @@ class LoggerManager
         }
 
         $timeConsume = 0;
-        $_SERVER['REQUEST_TIME'] = time() - 2;
         if (!empty($_SERVER['REQUEST_TIME'])) {
             $requestTs = $_SERVER['REQUEST_TIME'];
             $timeConsume = (time() - $requestTs) * 1000;
