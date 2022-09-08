@@ -64,14 +64,14 @@ class LoggerManager
         $insertSql .= "request_ts = '" . date('Y-m-d H:i:s') . "',";
         $insertSql .= "request_ip = '" . ($_SERVER['REMOTE_ADDR'] ?? '') . "',";
         $insertSql .= "request_mac = '',";
-        $insertSql .= "path = '{$url}',";
+        $insertSql .= "path = '" . addslashes($url) . "',";
         $insertSql .= "method = '{$method}',";
-        $insertSql .= "request_header = '" . json_encode($headers) . "',";
-        $insertSql .= "request_body = '" . json_encode($postData) . "',";
+        $insertSql .= "request_header = '" . addslashes(json_encode($headers)) . "',";
+        $insertSql .= "request_body = '" . addslashes(json_encode($postData)) . "',";
         $insertSql .= "time_consume = '" . $timeConsume . "',";
         $insertSql .= "response_status =  '" . json_encode($httpResponse->getStatusCode()) . "',";
-        $insertSql .= "response_header = '" . json_encode($httpResponse->getHeaders()) . "',";
-        $insertSql .= "response_body = " . json_encode($httpResponse->getBody()->getContents());
+        $insertSql .= "response_header = '" . addslashes(json_encode($httpResponse->getHeaders())) . "',";
+        $insertSql .= "response_body = '" . addslashes($httpResponse->getBody()->getContents()) . "';";
 
         try {
             $db = new PDO('mysql:host=' . $host . ';port:' . $port . ';dbname=' . $dbName, $user, $pass);
