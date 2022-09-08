@@ -3,10 +3,8 @@
 namespace Kingdeephp\K3cloud\Core\Log;
 
 use Monolog\Handler\RotatingFileHandler;
-use Monolog\ErrorHandler;
 use Monolog\Logger;
 use PDO;
-use GuzzleHttp\Psr7\Request;
 
 class LoggerManager
 {
