@@ -39,7 +39,6 @@ $config = [
         'database' => '',
         'username' => 'root',
         'password' => '',
-        'charset' => 'utf8mb4',
         'table' => '',
     ],
 ];

@@ -32,8 +32,11 @@ class WebApiClient
                 ]
             );
             $res = $response->getBody()->getContents();
-            LoggerManager::createMysqlLog($url, $headers, $postData, 'post', $this->config, $response);
             if (!empty($this->config['log'])) {
+                //mysql log
+                LoggerManager::createMysqlLog($url, $headers, $postData, 'post', $this->config, $response);
+
+                //file log
                 list($usec, $sec) = explode(" ", microtime());
                 LoggerManager::createDailyDriver($this->config['log']['name'], $this->config['log']['path'])
                     ->info('apiLog', [
@@ -49,6 +52,7 @@ class WebApiClient
             }
         } catch (\Throwable $exception) {
             if (!empty($this->config['log'])) {
+                //Throwable file log
                 LoggerManager::createDailyDriver($this->config['log']['name'], $this->config['log']['path'])
                     ->info('apiLog_exception', [
                     'log_id' => $logId,
