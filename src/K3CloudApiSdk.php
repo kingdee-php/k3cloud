@@ -312,6 +312,23 @@ class K3CloudApiSdk
     }
 
     /**
+     * 取消分配
+     * @param $formId
+     * @param $data
+     * @param string $format
+     * @return mixed|string|void
+     */
+    public function cancelAllocate($formId, $data, string $format = 'string')
+    {
+        $url = $this->hostUrl . ApiPathConst::CANCEL_ALLOCATE_API;
+        $postData = [
+            'formid' => $formId,
+            'data' => $data
+        ];
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
+    }
+
+    /**
      * 弹性域保存
      * @param $formId
      * @param $data

@@ -22,6 +22,8 @@ class ApiPathConst
     const SUBMIT_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Submit.common.kdsvc';
     // 审核
     const AUDIT_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Audit.common.kdsvc';
+    // 反审核
+    const UNAUDIT_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.UnAudit.common.kdsvc';
     // 下推
     const PUSH_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Push.common.kdsvc';
     // 暂存
@@ -30,10 +32,10 @@ class ApiPathConst
     const DELETE_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.delete.common.kdsvc';
     // 单据查询
     const EXECUTEBILLQUERY_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.ExecuteBillQuery.common.kdsvc';
-    // 反审核
-    const UNAUDIT_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.UnAudit.common.kdsvc';
     // 分配
     const ALLOCATE_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Allocate.common.kdsvc';
+    // 取消分配
+    const CANCEL_ALLOCATE_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.CancelAllocate.common.kdsvc';
     // 弹性域保存
     const FLEXSAVE_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.FlexSave.common.kdsvc';
     // 发送消息
