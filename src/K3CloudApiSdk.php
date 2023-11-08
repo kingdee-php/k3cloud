@@ -438,4 +438,21 @@ class K3CloudApiSdk
         ];
         return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
     }
+
+    /**
+     * 查询报表数据
+     * @param $formId
+     * @param $data
+     * @param string $format
+     * @return mixed|string|void
+     */
+    public function getSysReportData($formId, $data, string $format = 'string')
+    {
+        $url = $this->hostUrl . ApiPathConst::GET_SYS_REPORT_DATA_API;
+        $postData = [
+            'formid' => $formId,
+            'data' => $data
+        ];
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
+    }
 }

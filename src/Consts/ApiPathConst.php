@@ -52,4 +52,6 @@ class ApiPathConst
     const QUERYGROUPINFO_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.QueryGroupInfo.common.kdsvc';
     // 分组删除
     const GROUPDELETE_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.GroupDelete.common.kdsvc';
+    // 查询报表数据
+    const GET_SYS_REPORT_DATA_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.GetSysReportData.common.kdsvc';
 }
