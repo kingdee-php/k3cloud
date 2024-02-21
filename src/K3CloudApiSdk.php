@@ -114,7 +114,7 @@ class K3CloudApiSdk
     }
 
     /**
-     *  单据查询(json)
+     *  单据查询(json) （官方在2023.9.4新增此接口）
      * @param $data
      * @param string $format
      * @return mixed|string|void
