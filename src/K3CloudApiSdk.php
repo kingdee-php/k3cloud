@@ -114,6 +114,21 @@ class K3CloudApiSdk
     }
 
     /**
+     *  单据查询(json)
+     * @param $data
+     * @param string $format
+     * @return mixed|string|void
+     */
+    public function billQuery($data, string $format = 'string')
+    {
+        $url = $this->hostUrl . ApiPathConst::BILLQUERY_API;
+        $postData = [
+            'data' => $data
+        ];
+        return $this->webApiClient->execute($url, $this->getHeaders($url), $postData, $format);
+    }
+
+    /**
      * 元数据查询
      * @param $data
      * @param string $format

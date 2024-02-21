@@ -32,6 +32,8 @@ class ApiPathConst
     const DELETE_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.delete.common.kdsvc';
     // 单据查询
     const EXECUTEBILLQUERY_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.ExecuteBillQuery.common.kdsvc';
+    // 单据查询(json)
+    const BILLQUERY_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.BillQuery.common.kdsvc';
     // 分配
     const ALLOCATE_API = 'Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Allocate.common.kdsvc';
     // 取消分配
