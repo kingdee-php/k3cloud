@@ -1,6 +1,6 @@
 {
   "name": "kingdee-php/k3cloud",
-  "description": "This is KingDee PHP SDK",
+  "description": "This is KingDee（金蝶） PHP SDK",
   "type": "library",
   "license": "MIT",
   "autoload": {
